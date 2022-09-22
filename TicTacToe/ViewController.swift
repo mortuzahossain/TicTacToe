@@ -28,7 +28,7 @@ class ViewController: UIViewController {
     var cross = "X"
     var zero = "O"
     
-    
+    var isComputerPlay = true
     var crossLabel = "X"
     var zeroLabel = "O"
     
@@ -68,6 +68,37 @@ class ViewController: UIViewController {
     @IBAction func handleClick(_ sender: UIButton) {
         addToBoard(sender)
         
+        checkVictory()
+        
+        var canPlay = true
+        if ticTacToe!.isFullBoard() {
+            canPlay = false
+            resultAleart(title: "Tie")
+        }
+        
+        if isComputerPlay && canPlay {
+            // play
+            while true {
+                let randomInt = Int.random(in: 0...8)
+                if board[randomInt].title(for: .normal) == nil{
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                        self.addToBoard(self.board[randomInt])
+                    }
+                    break
+                }
+            }
+            // check victory
+            checkVictory()
+            // check full board
+            if ticTacToe!.isFullBoard() {
+                resultAleart(title: "Tie")
+            }
+            
+        }
+        
+    }
+    
+    func checkVictory(){
         if ticTacToe!.checkVictory(cross){
             winCountX += 1
             scoreLabel.text = "\(crossLabel) win: \(winCountX) \n\(zeroLabel) win: \(winCountO)"
@@ -77,11 +108,8 @@ class ViewController: UIViewController {
             scoreLabel.text = "\(crossLabel) win: \(winCountX) \nO win: \(winCountO)"
             resultAleart(title: "\(zeroLabel) win")
         }
-        
-        if ticTacToe!.isFullBoard() {
-            resultAleart(title: "Tie")
-        }
     }
+    
     
     func resultAleart(title:String) {
         let ac = UIAlertController(title: title, message: nil, preferredStyle: .actionSheet)
