@@ -28,6 +28,10 @@ class ViewController: UIViewController {
     var cross = "X"
     var zero = "O"
     
+    
+    var crossLabel = "X"
+    var zeroLabel = "O"
+    
     var board = [UIButton]()
     
     var winCountX = 0
@@ -37,6 +41,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         initBoard()
         ticTacToe = TicTacToe(board: board)
+        resetBoard()
     }
     
     func initBoard() {
@@ -56,7 +61,7 @@ class ViewController: UIViewController {
             b.configuration = .plain()
             b.setTitle(nil, for: .normal)
         }
-        turnLabel.text = "X"
+        turnLabel.text = crossLabel
         currentTurn = Turn.CROSS
     }
     
@@ -65,12 +70,12 @@ class ViewController: UIViewController {
         
         if ticTacToe!.checkVictory(cross){
             winCountX += 1
-            scoreLabel.text = "X win: \(winCountX) \nO win: \(winCountO)"
-            resultAleart(title: "X win")
+            scoreLabel.text = "\(crossLabel) win: \(winCountX) \n\(zeroLabel) win: \(winCountO)"
+            resultAleart(title: "\(crossLabel) win")
         } else if ticTacToe!.checkVictory(zero) {
             winCountO += 1
-            scoreLabel.text = "X win: \(winCountX) \nO win: \(winCountO)"
-            resultAleart(title: "O win")
+            scoreLabel.text = "\(crossLabel) win: \(winCountX) \nO win: \(winCountO)"
+            resultAleart(title: "\(zeroLabel) win")
         }
         
         if ticTacToe!.isFullBoard() {
@@ -91,12 +96,12 @@ class ViewController: UIViewController {
             if currentTurn == Turn.CROSS{
                 sender.setTitle(cross,for: .normal)
                 currentTurn = Turn.ZERO
-                turnLabel.text = zero
+                turnLabel.text = zeroLabel
             }
             else if currentTurn == Turn.ZERO{
                 sender.setTitle(zero,for: .normal)
                 currentTurn = Turn.CROSS
-                turnLabel.text = cross
+                turnLabel.text = crossLabel
             }
         }
     }
