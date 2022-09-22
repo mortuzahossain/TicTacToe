@@ -19,6 +19,7 @@ class SelectionPlayerVC:UIViewController{
                     let vc = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "ViewController") as? ViewController
                     vc?.zeroLabel = name2
                     vc?.crossLabel = name1
+                    vc?.isComputerPlay = false
                     self.navigationController?.pushViewController(vc!, animated: true)
                 }
             }
